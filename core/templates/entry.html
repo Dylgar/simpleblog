@@ -3,10 +3,15 @@
 {% block content %}
 	<h1> {{ entry.title }} </h1>
 	<p> {{ entry.content|safe }} </p>
+	<p> 
+	{% for label in entry.labels %}
+		{{ label }} 
+	{% endfor %}
+	</p>
 	Created at: {{ entry.created_date }}<br>
 	Edited at: {{ entry.edited_date }}<br>
-	Written by: {{ entry.author.nickname }}
-	{% if user.is_current_user_admin %}
-		<a href={% url edit_entry entry.key.id %}>Edit</a>
+	Written by: {{ entry.author.nickname }}<br>
+	{% if user_is_admin %}
+		<a href={% url core.views.edit_entry entry.key.id %}>Edit</a>
 	{% endif %} 
 {% endblock %}

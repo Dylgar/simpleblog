@@ -7,6 +7,6 @@ class Entry(db.Model):
 	edited_date = db.DateTimeProperty(auto_now=True)
 	title = db.StringProperty()
 	content = db.TextProperty()
-	#topics = None # list of words
+	labels = db.StringListProperty()
 	
 	

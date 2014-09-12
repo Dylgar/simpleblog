@@ -4,3 +4,4 @@ class EntryForm(forms.Form):
 	
 	title = forms.CharField()
 	content = forms.CharField(widget=forms.Textarea)
+	labels = forms.CharField()
