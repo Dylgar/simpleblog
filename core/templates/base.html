@@ -5,6 +5,7 @@
 	</head>
 	<body>
 		<div>
+			<a href="/">Home</a>
 			{% if user %}
 				Welcome {{ user.nickname }}. <a href={{ logout_url }}>logout</a>
 			{% else %}

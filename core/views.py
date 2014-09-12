@@ -12,12 +12,13 @@ import logging
 
 def _get_default_template_data(request):
     user = users.get_current_user()
-    login_url = users.create_login_url('/')
-    logout_url = users.create_logout_url('/')
+    login_url = users.create_login_url(request.path)
+    logout_url = users.create_logout_url(request.path)
     data = {'user': user,
             'login_url': login_url,
             'logout_url': logout_url}
     return data
+	
 def index(request):
     # List the title and created date of all posts. (maybe paginated, maybe include first paragraph)
     entries = Entry.all()
@@ -28,7 +29,7 @@ def index(request):
 def add_entry(request):
     data = _get_default_template_data(request)
     if not data['user']:
-        return HttpResponseRedirect(users.create_login_url('/add'))
+        return HttpResponseRedirect(users.create_login_url(request.path))
     if request.method == "POST":
         form = EntryForm(request.POST)
         if form.is_valid():
@@ -45,7 +46,7 @@ def add_entry(request):
 def edit_entry(request, entry_id):
     data = _get_default_template_data(request)
     if not data['user']:
-        return HttpResponseRedirect(users.create_login_url('/entry/%s/edit' % entry_id))
+        return HttpResponseRedirect(users.create_login_url(request.path))
     entry = Entry.get_by_id(long(entry_id))
     if request.method == "POST":
         form = EntryForm(request.POST)

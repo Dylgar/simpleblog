@@ -5,5 +5,8 @@
 	<p> {{ entry.content|safe }} </p>
 	Created at: {{ entry.created_date }}<br>
 	Edited at: {{ entry.edited_date }}<br>
-	Written by: {{ user.nickname }}
+	Written by: {{ entry.author.nickname }}
+	{% if user.is_current_user_admin %}
+		<a href={% url edit_entry entry.key.id %}>Edit</a>
+	{% endif %} 
 {% endblock %}
