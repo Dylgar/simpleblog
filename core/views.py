@@ -3,17 +3,32 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.context_processors import csrf
 
+from google.appengine.api import users
+
 from core.forms import EntryForm
 from core.models import Entry
 
-hello_world = TemplateView.as_view(template_name='hello-world.html')
+import logging
+
+def _get_default_template_data(request):
+    user = users.get_current_user()
+    login_url = users.create_login_url('/')
+    logout_url = users.create_logout_url('/')
+    data = {'user': user,
+            'login_url': login_url,
+            'logout_url': logout_url}
+    return data
 def index(request):
     # List the title and created date of all posts. (maybe paginated, maybe include first paragraph)
     entries = Entry.all()
-    return render_to_response('index.html', {'entries': entries})
+    data = _get_default_template_data(request)
+    data['entries'] = entries
+    return render_to_response('index.html', data)
     
 def add_entry(request):
-    
+    data = _get_default_template_data(request)
+    if not data['user']:
+        return HttpResponseRedirect(users.create_login_url('/add'))
     if request.method == "POST":
         form = EntryForm(request.POST)
         if form.is_valid():
@@ -23,12 +38,14 @@ def add_entry(request):
         return HttpResponseRedirect("/entry/%s" % instance.key().id())
     else:
         form = EntryForm()
-        c = {'form': form}
-        c.update(csrf(request))
-        return render_to_response('edit.html', c)
+        data['form'] = form
+        data.update(csrf(request))
+        return render_to_response('edit.html', data)
 
 def edit_entry(request, entry_id):
-
+    data = _get_default_template_data(request)
+    if not data['user']:
+        return HttpResponseRedirect(users.create_login_url('/entry/%s/edit' % entry_id))
     entry = Entry.get_by_id(long(entry_id))
     if request.method == "POST":
         form = EntryForm(request.POST)
@@ -39,10 +56,13 @@ def edit_entry(request, entry_id):
             return HttpResponseRedirect("/entry/%s/" % entry_id)
     else:
         form = EntryForm(initial={'title': entry.title, 'content': entry.content})
-        c = {'form': form}
-        c.update(csrf(request))
-        return render_to_response('edit.html', c)
+        data['form'] = form
+        data.update(csrf(request))
+        return render_to_response('edit.html', data)
     
 def entry(request, entry_id):
-    entry = Entry.get_by_id(long(entry_id))
-    return render_to_response('entry.html', {'entry': entry})
+
+    data = _get_default_template_data(request)
+    
+    data['entry'] = Entry.get_by_id(long(entry_id))
+    return render_to_response('entry.html', data)

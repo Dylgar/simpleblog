@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>{% block title %}Blog{% endblock %}</title>
+	</head>
+	<body>
+		<div>
+			{% if user %}
+				Welcome {{ user.nickname }}. <a href={{ logout_url }}>logout</a>
+			{% else %}
+				<a href={{ login_url }}>login</a>
+			{% endif %}
+		</div>
+		<div>		
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>
