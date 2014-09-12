@@ -50,7 +50,7 @@ SESSION_ENGINE = "appengine_sessions.backends.cached_db"
 #            }
 #        }
 #else:
-#    # Running in development, so use a local MySQL database.
+#s    # Running in development, so use a local MySQL database.
 #    DATABASES = {
 #        'default': {
 #            'ENGINE': 'django.db.backends.sqlite3',

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title> {{ entry.title }} </title>
+	</head>
+	<body>
+	<h1> {{ entry.title }} </h1>
+	<p> {{ entry.content|safe }} </p>
+	Created at: {{ entry.created_date }}
+	Edited at: {{ entry.edited_date }}
+	</body>
+</html>

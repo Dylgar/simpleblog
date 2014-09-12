@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title> Blog Home </title>
+	</head>
+	<body>
+	{% for entry in entries %}
+		<h1> {{ entry.title }} </h1>
+		<a href={% url core.views.entry entry.key.id %}> {{ entry.content|safe }} </a>
+		<br/>
+	{% endfor %}
+	</body>
+</html>

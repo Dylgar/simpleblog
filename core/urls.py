@@ -3,7 +3,10 @@ from django.conf.urls.defaults import url, patterns
 
 
 urlpatterns = patterns('core.views',
-    url(r'^$', 'hello_world', {}, name='hello-world'),
+    url(r'^$', 'index', {}),
+	url(r'^add/$', 'add_entry'),
+	url(r'^entry/([0-9]+)/edit/$', 'edit_entry'),
+	url(r'^entry/([0-9]+)/$', 'entry'),
 )
 
 
