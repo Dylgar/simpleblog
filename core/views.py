@@ -30,9 +30,11 @@ def _get_default_template_data(request):
     return data
     
 def index(request):
-    # List the title and created date of all posts. (maybe paginated, maybe include first paragraph)
-    # Add sorting by created date
+    label = request.GET.get('label', '')
     entries = Entry.all()
+    if label:
+        entries.filter("labels =", label)
+    entries.order('-created_date')
     data = _get_default_template_data(request)
     data['entries'] = entries
     return render_to_response('index.html', data)

@@ -5,7 +5,7 @@
 	<p> {{ entry.content|safe }} </p>
 	<p> 
 	{% for label in entry.labels %}
-		{{ label }} 
+		<a href={% url core.views.index %}?label={{ label }}>{{ label }}</a>
 	{% endfor %}
 	</p>
 	Created at: {{ entry.created_date }}<br>

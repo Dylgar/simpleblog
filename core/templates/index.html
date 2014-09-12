@@ -5,7 +5,7 @@
 		<a href={% url core.views.entry entry.key.id %}> {{ entry.content|safe }} </a>
 		Author: {{ entry.author.nickname }}<br/>
 		{% for label in entry.labels %}
-			label 
+			<a href={% url core.views.index %}?label={{ label }}>{{ label }}</a>
 		{% endfor %}<br/>
 	{% endfor %}
 {% endblock %}
