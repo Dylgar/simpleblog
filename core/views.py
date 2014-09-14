@@ -24,9 +24,11 @@ def _get_default_template_data(request):
     user = users.get_current_user()
     login_url = users.create_login_url(request.path)
     logout_url = users.create_logout_url(request.path)
+    user_is_admin = users.is_current_user_admin()
     data = {'user': user,
             'login_url': login_url,
-            'logout_url': logout_url}
+            'logout_url': logout_url,
+			'user_is_admin': user_is_admin}
     return data
     
 def index(request):
@@ -80,6 +82,5 @@ def edit_entry(request, entry_id):
     
 def entry(request, entry_id):
     data = _get_default_template_data(request)
-    data['user_is_admin'] = users.is_current_user_admin()
     data['entry'] = Entry.get_by_id(long(entry_id))
     return render_to_response('entry.html', data)

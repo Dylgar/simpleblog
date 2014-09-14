@@ -4,15 +4,22 @@
 		<title>{% block title %}Blog{% endblock %}</title>
 	</head>
 	<body>
-		<div>
-			<a href="/">Home</a>
-			{% if user %}
-				Welcome {{ user.nickname }}. <a href={{ logout_url }}>logout</a>
-			{% else %}
-				<a href={{ login_url }}>login</a>
-			{% endif %}
-		</div>
-		<div>		
+		<header id="header">
+			<div id="nav">
+				<a href="/">Home</a>
+				{% if user_is_admin %}
+					<a href={% url core.views.add_entry %}>Add</a>
+				{% endif %}
+			</div>
+			<div id="user">
+				{% if user %}
+					Welcome {{ user.nickname }}. <a href={{ logout_url }}>logout</a>
+				{% else %}
+					<a href={{ login_url }}>Login</a>
+				{% endif %}
+			</div>
+		</header>
+		<div id="content">		
 			{% block content %}{% endblock %}
 		</div>
 	</body>

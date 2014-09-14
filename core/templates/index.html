@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 	{% for entry in entries %}
-		<h1> {{ entry.title }} </h1>
-		<a href={% url core.views.entry entry.key.id %}> {{ entry.content|safe }} </a>
-		Author: {{ entry.author.nickname }}<br/>
-		{% for label in entry.labels %}
-			<a href={% url core.views.index %}?label={{ label }}>{{ label }}</a>
-		{% endfor %}<br/>
+		<div id="{{entry.key.id}}">
+			<a href={% url core.views.entry entry.key.id %}> <h1> {{ entry.title }} </h1></a>
+			<p>{{ entry.content|safe }} </p>
+			<div id="{{entry.key.id}}_info">
+				Author: {{ entry.author.nickname }}</br>
+				Tags: 
+				{% for label in entry.labels %}
+					<a href={% url core.views.index %}?label={{ label }}>{{ label }}</a>
+				{% endfor %}
+			</div>
+		</div>
 	{% endfor %}
 {% endblock %}

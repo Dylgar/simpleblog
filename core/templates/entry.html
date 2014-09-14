@@ -3,15 +3,16 @@
 {% block content %}
 	<h1> {{ entry.title }} </h1>
 	<p> {{ entry.content|safe }} </p>
-	<p> 
+	<div id="{{entry.key.id}}_info">
+	Author: {{ entry.author.nickname }} 
+	Created at: {{ entry.created_date }} 
+	Edited at: {{ entry.edited_date }} 
+	{% if user_is_admin %}
+		<a href={% url core.views.edit_entry entry.key.id %}>Edit</a>
+	{% endif %} </br>
+	Tags:
 	{% for label in entry.labels %}
 		<a href={% url core.views.index %}?label={{ label }}>{{ label }}</a>
 	{% endfor %}
-	</p>
-	Created at: {{ entry.created_date }}<br>
-	Edited at: {{ entry.edited_date }}<br>
-	Written by: {{ entry.author.nickname }}<br>
-	{% if user_is_admin %}
-		<a href={% url core.views.edit_entry entry.key.id %}>Edit</a>
-	{% endif %} 
+	</div>
 {% endblock %}
