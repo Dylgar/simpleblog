@@ -199,5 +199,5 @@ LOGGING = {
 }
 
 ALLOWED_HOSTS = [
-    'djappeng1ne-beta.appspot.com'
+    'dylansimpleblog.appspot.com'
 ]
